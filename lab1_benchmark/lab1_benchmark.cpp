@@ -1,20 +1,56 @@
-﻿// lab1_benchmark.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
-//
+﻿#include <iostream>
+#include <chrono>
+const double PERIOD = 3.0;
 
-#include <iostream>
+long long int_plus() {
+    long long COUNTER = 1'000'000;
 
-int main()
-{
-    std::cout << "Hello World!\n";
+    long a1 = 1, 
+        a2 = 2, 
+        b1 = 0, 
+        b2 = 0, 
+        c1 = 3, 
+        c2 = 5, 
+        c3 = 7, 
+        c4 = 11;
+    auto end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> diff;
+    long long op = 0;
+    double time_left, time_pass;
+
+    auto start = std::chrono::high_resolution_clock::now();
+    do {
+        for (long long i = 0; i < COUNTER; i++) {
+            a1 = b1 + c1;
+            a2 = b1 + c2 + i;
+            b1 = a1 + c3;
+            b2 = a2 + c4 + i;
+            c1 = a2 + b1;
+            c2 = a1 + b2 + i;
+            c3 = c1 + b1;
+            c4 = c2 + b2 + i;
+        }
+        op += COUNTER * 12;
+
+        end = std::chrono::high_resolution_clock::now();
+        diff = end - start;
+
+        time_pass = diff.count();
+        time_left = PERIOD - time_pass;
+        COUNTER = time_left * op / (diff.count() * 12);
+
+    } while (time_left > 0.0);
+
+    return op / time_pass;
 }
 
-// Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
-// Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
-
-// Советы по началу работы 
-//   1. В окне обозревателя решений можно добавлять файлы и управлять ими.
-//   2. В окне Team Explorer можно подключиться к системе управления версиями.
-//   3. В окне "Выходные данные" можно просматривать выходные данные сборки и другие сообщения.
-//   4. В окне "Список ошибок" можно просматривать ошибки.
-//   5. Последовательно выберите пункты меню "Проект" > "Добавить новый элемент", чтобы создать файлы кода, или "Проект" > "Добавить существующий элемент", чтобы добавить в проект существующие файлы кода.
-//   6. Чтобы снова открыть этот проект позже, выберите пункты меню "Файл" > "Открыть" > "Проект" и выберите SLN-файл.
+int main() {
+    std::cout << "int + " << int_plus() << "\n";
+    std::cout << "int + " << int_plus() << "\n";
+    std::cout << "int + " << int_plus() << "\n";
+    std::cout << "int + " << int_plus() << "\n";
+    std::cout << "int + " << int_plus() << "\n";
+    std::cout << "int + " << int_plus() << "\n";
+    std::cout << "int + " << int_plus() << "\n";
+    std::cout << "int + " << int_plus() << "\n";
+}
