@@ -3,8 +3,9 @@
 #include <string>
 #include <iomanip>
 
-const double PERIOD = 0.01;
 const int TESTS = 24, STARS_WIDTH = 40;
+
+const double PERIOD = 60.0 / (2 + TESTS); // время одного теста, чтобы программа работала одну минуту. с учётом "прогрева"
 
 long long int32_plus() {
     long long COUNTER = 1'000'000;
@@ -999,6 +1000,8 @@ int main() {
     " float *",
     " float /"
     };
+
+    std::cout << "Please wait 1 minute.\n";
 
     int8_plus(); // прогрев
     int8_minus(); // прогрев
