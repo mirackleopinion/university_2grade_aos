@@ -1,6 +1,6 @@
 FROM ubuntu:20.04
-RUN sudo apt install -y git
-RUN sudo apt install -y build-essential
+RUN apt install -y git
+RUN apt install -y build-essential
 
 COPY lab1_benchmark.cpp .
 
