@@ -11,7 +11,7 @@ typedef long long __int64;
 #endif
 
 const int TESTS = 24, STARS_WIDTH = 50;
-const int TEST_TIME = 6;
+const int TEST_TIME = 60;
 
 const double PERIOD = float(TEST_TIME) / (2 + TESTS); // время одного теста, чтобы программа работала одну минуту. с учётом "прогрева"
 

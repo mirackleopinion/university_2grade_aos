@@ -7,4 +7,4 @@ COPY lab1_benchmark.cpp .
 
 RUN gcc -o lab1_benchmark  lab1_benchmark.cpp -lstdc++
 
-ENTRYPOINT lab1_benchmark
+ENTRYPOINT /lab1_benchmark
