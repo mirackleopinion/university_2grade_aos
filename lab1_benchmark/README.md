@@ -44,8 +44,8 @@ gcc -o lab1_benchmark  lab1_benchmark.cpp -lstdc++
 ```
 # build and push docker image
 ```
-sudo docker build -t  2grade_aos_lab1_benchmark:latest . 
-sudo docker run -t 2grade_aos_lab1_benchmark:latest
-sudo docker push 2grade_aos_lab1_benchmark:latest
+sudo docker build -t mirackleopinion/university:2grade_aos_lab1_benchmark . 
+sudo docker run -t mirackleopinion/university:2grade_aos_lab1_benchmark
+sudo docker push mirackleopinion/university:2grade_aos_lab1_benchmark
 ```
 
