@@ -1,4 +1,5 @@
 on Ubuntu:
+```
 sudo apt install net-tools
 
 # install git and gcc
@@ -24,11 +25,14 @@ echo \
 
 sudo apt-get update
 sudo apt-get install docker-ce docker-ce-cli containerd.io
-
+```
 # login to docker hub
+```
 sudo docker login --username mirackleopinion
+```
 
 # clone, build and run code
+```
 git clone https://github.com/mirackleopinion/university_2grade_aos.git
 
 cd university_2grade_aos/
@@ -37,10 +41,11 @@ git pull
 cd lab1_benchmark/
 gcc -o lab1_benchmark  lab1_benchmark.cpp -lstdc++
 ./lab1_benchmark
-
+```
 # build and push docker image
+```
 sudo docker build -t  2grade_aos_lab1_benchmark:latest . 
 sudo docker run -t 2grade_aos_lab1_benchmark:latest
 sudo docker push 2grade_aos_lab1_benchmark:latest
-
+```
 
