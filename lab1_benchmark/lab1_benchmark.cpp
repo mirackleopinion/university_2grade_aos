@@ -5,6 +5,9 @@
 
 #ifndef _MSC_VER
 typedef char __int8;
+typedef short __int16;
+typedef int __int32;
+typedef long long __int64;
 #endif
 
 const int TESTS = 24, STARS_WIDTH = 50;
