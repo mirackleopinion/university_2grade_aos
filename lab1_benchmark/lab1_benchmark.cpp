@@ -3,9 +3,10 @@
 #include <string>
 #include <iomanip>
 
-const int TESTS = 24, STARS_WIDTH = 40;
+const int TESTS = 24, STARS_WIDTH = 50;
+const int TEST_TIME = 6;
 
-const double PERIOD = 60.0 / (2 + TESTS); // время одного теста, чтобы программа работала одну минуту. с учётом "прогрева"
+const double PERIOD = float(TEST_TIME) / (2 + TESTS); // время одного теста, чтобы программа работала одну минуту. с учётом "прогрева"
 
 long long int32_plus() {
     long long COUNTER = 1'000'000;
@@ -1001,7 +1002,7 @@ int main() {
     " float /"
     };
 
-    std::cout << "Please wait 1 minute.\n";
+    std::cout << "Please wait "<< TEST_TIME << " seconds...\n";
 
     int8_plus(); // прогрев
     int8_minus(); // прогрев
@@ -1048,7 +1049,11 @@ int main() {
     for (int i = 0; i < TESTS; i++) {
         int stars = int(STARS_WIDTH * operations_per_second[i] / better);
         int spaces = STARS_WIDTH - stars;
-        std::cout << test_names[i]<< " " << std::setw(15) << operations_per_second[i] << " "<< std::string(stars, 'x') << std::string(spaces, ' ') << " " << std::setw(3) << int(100.0 * operations_per_second[i] / better) << "%" << std::endl;
+        std::cout << test_names[i]<< " " 
+            << std::setw(12) << operations_per_second[i] 
+            << " "<< std::string(stars, 'x') << std::string(spaces, ' ') << " " 
+            << std::setw(3) << int(100.0 * operations_per_second[i] / better) << "%" 
+            << std::endl;
 
     };
 }
