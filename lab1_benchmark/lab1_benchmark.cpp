@@ -1,6 +1,10 @@
 ﻿#include <iostream>
 #include <chrono>
-const double PERIOD = 1;
+#include <string>
+#include <iomanip>
+
+const double PERIOD = 0.01;
+const int TESTS = 24, STARS_WIDTH = 40;
 
 long long int32_plus() {
     long long COUNTER = 1'000'000;
@@ -617,7 +621,6 @@ long long int64_division() {
         for (long long i = 1; i < COUNTER; i++) {
             a1 = b1 / c1;
             a2 = b2 / c2 / i;
-;
         }
         op += COUNTER * 3;
 
@@ -964,39 +967,85 @@ long long float_division() {
 }
 
 int main() {
+
+    std::string test_names[TESTS] = {
+    "  int8 +",
+    "  int8 -",
+    "  int8 *",
+    "  int8 /",
+
+    " int16 +",
+    " int16 -",
+    " int16 *",
+    " int16 /",
+
+    " int32 +",
+    " int32 -",
+    " int32 *",
+    " int32 /",
+
+    " int64 +",
+    " int64 -",
+    " int64 *",
+    " int64 /",
+
+    "double +",
+    "double -",
+    "double *",
+    "double /",
+
+    " float +",
+    " float -",
+    " float *",
+    " float /"
+    };
+
     int8_plus(); // прогрев
     int8_minus(); // прогрев
 
+    long long operations_per_second[TESTS] = {
+        int8_plus(),
+        int8_minus(),
+        int8_multiplication(),
+        int8_division(),
 
+        int16_plus(),
+        int16_minus(),
+        int16_multiplication(),
+        int16_division(),
 
-    std::cout << "int8 + " << int8_plus() << "\n";
-    std::cout << "int8 - " << int8_minus() << "\n";
-    std::cout << "int8 * " << int8_multiplication() << "\n";
-    std::cout << "int8 / " << int8_division() << "\n" << "\n";
+        int32_plus(),
+        int32_minus(),
+        int32_multiplication(),
+        int32_division(),
 
-    std::cout << "int16 + " << int16_plus() << "\n";
-    std::cout << "int16 - " << int16_minus() << "\n";
-    std::cout << "int16 * " << int16_multiplication() << "\n";
-    std::cout << "int16 / " << int16_division() << "\n" << "\n";
+        int64_plus(),
+        int64_minus(),
+        int64_multiplication(),
+        int64_division(),
 
-    std::cout << "int32 + " << int32_plus() << "\n";
-    std::cout << "int32 - " << int32_minus() << "\n";
-    std::cout << "int32 * " << int32_multiplication() << "\n";
-    std::cout << "int32 / " << int32_division() << "\n" << "\n";
+        double_plus(),
+        double_minus(),
+        double_multiplication(),
+        double_division(),
 
-    std::cout << "int64 + " << int64_plus() << "\n";
-    std::cout << "int64 - " << int64_minus() << "\n";
-    std::cout << "int64 * " << int64_multiplication() << "\n";
-    std::cout << "int64 / " << int64_division() << "\n" << "\n";
+        double_plus(),
+        double_minus(),
+        double_multiplication(),
+        double_division()
+    };
 
-    std::cout << "double + " << double_plus() << "\n";
-    std::cout << "double - " << double_minus() << "\n";
-    std::cout << "double * " << double_multiplication() << "\n";
-    std::cout << "double / " << double_division() << "\n" << "\n";
+    long long better = operations_per_second[0];
+    for (int i = 1; i < TESTS; i++) {
+        if (operations_per_second[i] > better) {
+            better = operations_per_second[i];
+        }
+    }
+    
+    for (int i = 0; i < TESTS; i++) {
+        int stars = int(STARS_WIDTH * operations_per_second[i] / better);
+        int spaces = STARS_WIDTH - stars;
+        std::cout << test_names[i]<< " " << std::setw(15) << operations_per_second[i] << " "<< std::string(stars, 'x') << std::string(spaces, ' ') << " " << std::setw(3) << int(100.0 * operations_per_second[i] / better) << "%" << std::endl;
 
-
-    std::cout << "float + " << double_plus() << "\n";
-    std::cout << "float - " << double_minus() << "\n";
-    std::cout << "float * " << double_multiplication() << "\n";
-    std::cout << "float / " << double_division() << "\n" << "\n";
+    };
 }
