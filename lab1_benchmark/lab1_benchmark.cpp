@@ -3,6 +3,10 @@
 #include <string>
 #include <iomanip>
 
+#ifndef _MSC_VER
+typedef char __int8;
+#endif
+
 const int TESTS = 24, STARS_WIDTH = 50;
 const int TEST_TIME = 6;
 
@@ -11,7 +15,7 @@ const double PERIOD = float(TEST_TIME) / (2 + TESTS); // время одного
 long long int32_plus() {
     long long COUNTER = 1'000'000;
 
-    int a1 = 1, 
+    __int32 a1 = 1, 
         a2 = 2, 
         b1 = 0, 
         b2 = 0, 
@@ -52,7 +56,7 @@ long long int32_plus() {
 long long int32_minus() {
     long long COUNTER = 1'000'000;
 
-    int a1 = 1,
+    __int32 a1 = 1,
         a2 = 2,
         b1 = 1,
         b2 = 2,
@@ -93,7 +97,7 @@ long long int32_minus() {
 long long int32_multiplication() {
     long long COUNTER = 1'000'000;
 
-    int a1 = 1,
+    __int32 a1 = 1,
         a2 = 2,
         b1 = 1,
         b2 = 2,
@@ -134,7 +138,7 @@ long long int32_multiplication() {
 long long int32_division() {
     long long COUNTER = 1'000'000;
 
-    int a1 = 10,
+    __int32 a1 = 10,
         a2 = 20,
         b1 = 10,
         b2 = 20,
