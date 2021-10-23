@@ -1,0 +1,7 @@
+MOV R1, -10
+MOV R2, R1
+MOV R3, 5
+OR R3, R1, 7
+OR R3, R1, R2
+OR R3, 5, R2
+OR R3, 3, 10
