@@ -14,7 +14,8 @@ def tick():
 
 def prepare(_p, cmd):
     _p['IR'] = cmd
-    _p['TC'] += 1
+    _p['TC'] = 1
+    _p['PC'] += 1
 
 
 def to_register(s):
@@ -67,8 +68,7 @@ def execute(_p):
 
         set_ps(_p, dst)
 
-    _p['TC'] += 1
-    _p['PC'] += 1
+    _p['TC'] = 2
 
 
 def set_ps(_p, dst):
