@@ -17,6 +17,7 @@ stack = []
 # MANTISS_WIDTH = 52
 # EXPONENT_WIDTH = 11
 
+# variant 7.9
 MANTISS_WIDTH = 9
 EXPONENT_WIDTH = 7
 
@@ -36,19 +37,43 @@ def set_exp(arr, exp):
 
 
 def is_zero(x):
-    pass  # TODO
+    _, e, m = ieee754_cutter(x)
+
+    if m != 0:
+        return False
+
+    if e != MINIMUM_EXP:
+        return False
+
+    return True
 
 
 def is_infinity(x):
-    pass  # TODO
+    _, e, m = ieee754_cutter(x)
+
+    if m != 0:
+        return False
+
+    if e != MAXIMUM_EXP:
+        return False
+
+    return True
 
 
 def is_nan(x):
-    pass  # TODO
+    if is_infinity(x):
+        return False
+
+    e = ieee754_cutter(x)[1]
+    return e == MAXIMUM_EXP
 
 
 def is_denormalized(x):
-    pass  # TODO
+    if is_zero(x):
+        return False
+
+    e = ieee754_cutter(x)[1]
+    return e == MINIMUM_EXP
 
 
 def ieee754_to_float(x):
