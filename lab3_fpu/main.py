@@ -290,7 +290,25 @@ def fcos():
     print(f'fsin cos({ieee754_to_float(x)}) = {ieee754_to_float(c)} ')
     show_stack()
 
+mantiss_null = MANTISS_WIDTH*[0]
+mantiss_one = MANTISS_WIDTH*[1]
 
+exponent_null = EXPONENT_WIDTH*[0]
+exponent_one = EXPONENT_WIDTH*[1]
+
+
+print(f"+0:  [0] {mantiss_null} {exponent_null} число IEEE754=00 00 00 00hex считается числом +0")
+print(f"-0:  [1] {mantiss_null} {exponent_null} число IEEE754=80 00 00 00hex считается числом -0")
+
+print(f"+∞:  [0] {mantiss_one} {exponent_null} число IEEE754=7F 80 00 00hex считается числом +∞")
+print(f"-∞:  [1] {mantiss_one} {exponent_null} число IEEE754=FF 80 00 00hex считается числом -∞")
+
+print(f"NaN: [0] {mantiss_one} {exponent_null} числа IEEE754=FF (1xxx)X XX XXhex не считается числами (NAN)")
+print(f"NaN: [1] {mantiss_one} {exponent_null} числа IEEE754=7F (1xxx)X XX XXhex не считается числами (NAN)")
+
+print(f"DeN: [0] {mantiss_one} {exponent_one} числа IEEE754=FF (1xxx)X XX XXhex не считается числами (NAN)")
+print(f"DeN: [1] {mantiss_one} {exponent_one} числа IEEE754=7F (1xxx)X XX XXhex не считается числами (NAN)")
+print("-----------------------------------------------------------------------------------------------------")
 x = input("x:")
 y = input("y:")
 
