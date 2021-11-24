@@ -110,23 +110,34 @@ def ieee754_to_str(x):
     result = []
     result.append(str(x[0]))  # sign
     result.append(''.join(map(str, x[1:EXPONENT_WIDTH + 1])))  # exponenta
+
     result.append(''.join(map(str, x[EXPONENT_WIDTH + 1:])))  # mantissa
 
+    mantiss_forgotten_bit = ''
+
     if is_zero(x):
+        mantiss_forgotten_bit = '0'
         if x[0] == 1:
             result.append('-0.0')
         else:
             result.append('+0.0')
     elif is_infinity(x):
+        mantiss_forgotten_bit = '1'
         if x[0] == 1:
             result.append('-∞')
         else:
             result.append('+∞')
     elif is_nan(x):
+        mantiss_forgotten_bit = '0'
         result.append('NaN')
     else:
-        result.append(f'{ieee754_to_float(x):.20f}')
+        if is_denormalized(x):
+            mantiss_forgotten_bit = '0'
+        else:
+            mantiss_forgotten_bit = '1'
+        result.append(f'{ieee754_to_float(x):.25f}')
 
+    result.insert(2, mantiss_forgotten_bit)
     return ' '.join(result)
 
 
@@ -290,25 +301,40 @@ def fcos():
     print(f'fsin cos({ieee754_to_float(x)}) = {ieee754_to_float(c)} ')
     show_stack()
 
-mantiss_null = MANTISS_WIDTH*[0]
-mantiss_one = MANTISS_WIDTH*[1]
 
-exponent_null = EXPONENT_WIDTH*[0]
-exponent_one = EXPONENT_WIDTH*[1]
+print(f's {"e" * EXPONENT_WIDTH} M.{"m" * MANTISS_WIDTH} decimal value')
+
+z = [0] + [0] * (EXPONENT_WIDTH - 1) + [1] + [0] * MANTISS_WIDTH
+print(f'{ieee754_to_str(z):70} мінімальне за абсолютною величиною ненульове представлення')
+
+z = [0] + [1] * (EXPONENT_WIDTH - 1) + [0] + [1] * MANTISS_WIDTH
+print(f'{ieee754_to_str(z):70} максимальне додатнє представлення (2 - 2^(-{MANTISS_WIDTH})) * 2^{MAXIMUM_EXP - 1}')
+
+z = [1] + [1] * (EXPONENT_WIDTH - 1) + [0] + [1] * MANTISS_WIDTH
+print(f'{ieee754_to_str(z):70} мінімальне від’ємне преставлення')
+
+z = str_to_ieee754("1.0")
+print(f'{ieee754_to_str(z):70} число +1,0Е0')
+
+z = [0] + [1] * EXPONENT_WIDTH + [0] * MANTISS_WIDTH
+print(f'{ieee754_to_str(z):70} значення +∞')
+
+z = [1] + [1] * EXPONENT_WIDTH + [0] * MANTISS_WIDTH
+print(f'{ieee754_to_str(z):70} значення -∞')
+
+z = [0] + [0] * (EXPONENT_WIDTH ) + [0] * (MANTISS_WIDTH - 1) + [1]
+print(f'{ieee754_to_str(z):70} будь-який варіант для ненормалізованого ЧПТ')
+
+z = [0] + [0] * (EXPONENT_WIDTH + MANTISS_WIDTH )
+print(f'{ieee754_to_str(z):70} +0.0')
+
+z = [1] + [0] * (EXPONENT_WIDTH + MANTISS_WIDTH )
+print(f'{ieee754_to_str(z):70} -0.0')
+
+z = [0] + [1] * (EXPONENT_WIDTH ) + [0] * (MANTISS_WIDTH - 1) + [1]
+print(f'{ieee754_to_str(z):70} будь-який варіант для NaN-значення')
 
 
-print(f"+0:  [0] {mantiss_null} {exponent_null} число IEEE754=00 00 00 00hex считается числом +0")
-print(f"-0:  [1] {mantiss_null} {exponent_null} число IEEE754=80 00 00 00hex считается числом -0")
-
-print(f"+∞:  [0] {mantiss_one} {exponent_null} число IEEE754=7F 80 00 00hex считается числом +∞")
-print(f"-∞:  [1] {mantiss_one} {exponent_null} число IEEE754=FF 80 00 00hex считается числом -∞")
-
-print(f"NaN: [0] {mantiss_one} {exponent_null} числа IEEE754=FF (1xxx)X XX XXhex не считается числами (NAN)")
-print(f"NaN: [1] {mantiss_one} {exponent_null} числа IEEE754=7F (1xxx)X XX XXhex не считается числами (NAN)")
-
-print(f"DeN: [0] {mantiss_one} {exponent_one} числа IEEE754=FF (1xxx)X XX XXhex не считается числами (NAN)")
-print(f"DeN: [1] {mantiss_one} {exponent_one} числа IEEE754=7F (1xxx)X XX XXhex не считается числами (NAN)")
-print("-----------------------------------------------------------------------------------------------------")
 x = input("x:")
 y = input("y:")
 
